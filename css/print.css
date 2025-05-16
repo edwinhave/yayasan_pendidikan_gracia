@@ -1,0 +1,7 @@
+body {
+  font-family: calibri;
+}
+
+tr:nth-child(even) {
+  background-color: #bcebe9;
+}
