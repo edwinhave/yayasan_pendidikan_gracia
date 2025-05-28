@@ -83,8 +83,7 @@ if (isset($_POST["login"])) {
 
 <body>
     <div class="login-container">
-        <h3 class="text-center">Login Portal Gracia</h3>
-        <div class="text-center mb-4">Login sebagai murid</div>
+        <h3 class="text-center mb-4">Login Portal Gracia</h3>
 
         <?php if (isset($error)): ?>
             <div class="alert alert-danger" role="alert">
