@@ -1,28 +1,19 @@
-# Ignore vendor directory (Composer dependencies)
-vendor/
-
-# Ignore Composer lock file if you're not committing it
-# (Usually it's better to commit this for consistency across environments)
-# composer.lock
-
-# Ignore system files
-.DS_Store
-Thumbs.db
-
-# Ignore logs and temp files
-*.log
-*.cache
-
-# Ignore node_modules if you're using any JS tools
-node_modules/
-
-# Ignore environment files
+/.phpunit.cache
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
 .env
-.env.local
-.env.*
-
-# Ignore IDE/editor configs
-.idea/
-.vscode/
-*.sublime-project
-*.sublime-workspace
+.env.backup
+.env.production
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+npm-debug.log
+yarn-error.log
+/.fleet
+/.idea
+/.vscode
