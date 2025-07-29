@@ -19,12 +19,10 @@ type RegistrationFormProps = {
         id: number;
         full_name: string;
         email: string;
-        phone?: string;
+        phone_mobile?: string;
         birth_date?: string; // ISO date string
         birth_place?: string;
         address?: string;
-        guardian_name?: string;
-        guardian_phone?: string;
         previous_school?: string;
         status: 'pending' | 'approved' | 'rejected';
     };
@@ -36,14 +34,12 @@ export default function RegistrationForm({ registration }: RegistrationFormProps
     const form = useForm({
         full_name: registration?.full_name || '',
         email: registration?.email || '',
-        phone: registration?.phone || '',
+        phone_mobile: registration?.phone_mobile || '',
         birth_date: registration?.birth_date || '',
         birth_place: registration?.birth_place || '',
         address: registration?.address || '',
-        guardian_name: registration?.guardian_name || '',
-        guardian_phone: registration?.guardian_phone || '',
         previous_school: registration?.previous_school || '',
-        status: registration?.status || 'pending',
+        status: 'pending',
     });
 
     function onSubmit(e: React.FormEvent) {
@@ -100,15 +96,15 @@ export default function RegistrationForm({ registration }: RegistrationFormProps
                 </div>
 
                 <div>
-                    <Label htmlFor="phone">Nomor Telepon</Label>
+                    <Label htmlFor="phone_mobile">Nomor Telepon</Label>
                     <Input
-                        id="phone"
-                        value={form.data.phone}
-                        onChange={(e) => form.setData('phone', e.target.value)}
-                        className={form.errors.phone ? 'border-red-500' : ''}
+                        id="phone_mobile"
+                        value={form.data.phone_mobile}
+                        onChange={(e) => form.setData('phone_mobile', e.target.value)}
+                        className={form.errors.phone_mobile ? 'border-red-500' : ''}
                     />
-                    {form.errors.phone && (
-                        <p className="text-red-500 text-sm mt-1">{form.errors.phone}</p>
+                    {form.errors.phone_mobile && (
+                        <p className="text-red-500 text-sm mt-1">{form.errors.phone_mobile}</p>
                     )}
                 </div>
 
@@ -153,36 +149,6 @@ export default function RegistrationForm({ registration }: RegistrationFormProps
                     {form.errors.address && (
                         <p className="text-red-500 text-sm mt-1">{form.errors.address}</p>
                     )}
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                    <div>
-                        <Label htmlFor="guardian_name">Nama Wali</Label>
-                        <Input
-                            id="guardian_name"
-                            value={form.data.guardian_name}
-                            onChange={(e) => form.setData('guardian_name', e.target.value)}
-                            className={form.errors.guardian_name ? 'border-red-500' : ''}
-                        />
-                        {form.errors.guardian_name && (
-                            <p className="text-red-500 text-sm mt-1">{form.errors.guardian_name}</p>
-                        )}
-                    </div>
-
-                    <div>
-                        <Label htmlFor="guardian_phone">Nomor Telepon Wali</Label>
-                        <Input
-                            id="guardian_phone"
-                            value={form.data.guardian_phone}
-                            onChange={(e) => form.setData('guardian_phone', e.target.value)}
-                            className={form.errors.guardian_phone ? 'border-red-500' : ''}
-                        />
-                        {form.errors.guardian_phone && (
-                            <p className="text-red-500 text-sm mt-1">
-                                {form.errors.guardian_phone}
-                            </p>
-                        )}
-                    </div>
                 </div>
 
                 <div>
