@@ -15,8 +15,8 @@ class PendaftaranController extends Controller
 {
     public function index()
     {
-        return Inertia::render('MataPelajaran/Index', [
-            'subjects' => MataPelajaran::get(),
+        return Inertia::render('Pendaftaran/Index', [
+            'pendaftaran' => Pendaftaran::get(),
         ]);
     }
 
@@ -30,12 +30,10 @@ class PendaftaranController extends Controller
         $data = $request->validate([
             'full_name'       => ['required', 'string', 'max:255'],
             'email'           => ['required', 'email', 'max:255', 'unique:registrations,email'],
-            'phone'           => ['nullable', 'string', 'max:20'],
+            'phone_mobile'           => ['nullable', 'string', 'max:20'],
             'birth_date'      => ['nullable', 'date'],
             'birth_place'     => ['nullable', 'string', 'max:255'],
             'address'         => ['nullable', 'string', 'max:500'],
-            'guardian_name'   => ['nullable', 'string', 'max:255'],
-            'guardian_phone'  => ['nullable', 'string', 'max:20'],
             'previous_school' => ['nullable', 'string', 'max:255'],
         ]);
 
@@ -62,9 +60,7 @@ class PendaftaranController extends Controller
 
         $login = Auth::login($user);
 
-        if ($login) {
-            return redirect()->intended(RouteServiceProvider::HOME);
-        }
+        return redirect()->route('siswaSide.dashboard')->with('success', 'Berhasil Mendaftar.');
     }
 
     public function edit(MataPelajaran $mataPelajaran)
