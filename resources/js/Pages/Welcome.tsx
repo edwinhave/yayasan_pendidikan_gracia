@@ -2,8 +2,6 @@ import { Link, Head } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import { Button } from '@/Components/ui/button';
 import { Card, CardContent } from '@/Components/ui/card';
-import { Input } from '@/Components/ui/input';
-import { Textarea } from '@/Components/ui/textarea';
 
 export default function Welcome({
     auth,
@@ -13,12 +11,12 @@ export default function Welcome({
     return (
         <>
             <Head title="Welcome" />
-            <div className="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white ">
+            <div className="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-gray-100 dark:bg-gray-900 selection:bg-red-500 selection:text-white">
                 <div className="sm:fixed sm:top-0 sm:right-0 p-6 text-end">
                     {auth.user ? (
                         <Link
                             href={route('dashboard')}
-                            className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                            className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
                         >
                             Dashboard
                         </Link>
@@ -26,14 +24,13 @@ export default function Welcome({
                         <>
                             <Link
                                 href={route('login')}
-                                className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
                             >
                                 Masuk
                             </Link>
-
                             <Link
                                 href={route('registration-ppdb.register')}
-                                className="ms-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                className="ms-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
                             >
                                 Daftar
                             </Link>
@@ -41,7 +38,7 @@ export default function Welcome({
                     )}
                 </div>
 
-                <main className="min-h-screen p-6 flex flex-col items-center">
+                <main className="min-h-screen w-full flex flex-col items-center p-6">
                     <section className="max-w-3xl text-center py-16">
                         <h1 className="text-4xl font-bold text-blue-700 mb-4">
                             Penerimaan Peserta Didik Baru
@@ -50,24 +47,44 @@ export default function Welcome({
                             Sekolah Gracia
                         </h2>
                         <p className="text-gray-600 mb-6">
-                            Mari bergabung dengan kami di Sekolah Gracia! Lingkungan belajar yang
-                            aman, nyaman, dan mendukung perkembangan karakter anak.
+                            Mari bergabung dengan kami di Sekolah Gracia! Lingkungan belajar yang aman, nyaman, dan mendukung perkembangan karakter anak.
                         </p>
                         <Link href={route('registration-ppdb.register')}>
                             <Button>Daftar Sekarang</Button>
                         </Link>
                     </section>
 
+                    {/* Carousel Section */}
+                    <section className="w-full max-w-5xl px-4">
+                        <div id="carouselExample" className="carousel slide" data-bs-ride="carousel">
+                            <div className="carousel-inner rounded overflow-hidden">
+                                <div className="carousel-item active">
+                                    <img src="/img/1.JPG" className="d-block w-100" alt="Slide 1" />
+                                </div>
+                                <div className="carousel-item">
+                                    <img src="/img/2.JPG" className="d-block w-100" alt="Slide 2" />
+                                </div>
+                                <div className="carousel-item">
+                                    <img src="/img/3.JPG" className="d-block w-100" alt="Slide 3" />
+                                </div>
+                            </div>
+                            <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                                <span className="carousel-control-prev-icon"></span>
+                                <span className="visually-hidden">Previous</span>
+                            </button>
+                            <button className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                                <span className="carousel-control-next-icon"></span>
+                                <span className="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </section>
+
                     <section className="w-full max-w-4xl gap-8 py-12">
                         <Card>
                             <CardContent className="p-6">
-                                <h3 className="text-xl font-semibold mb-4">
-                                    Tentang Sekolah Gracia
-                                </h3>
+                                <h3 className="text-xl font-semibold mb-4">Tentang Sekolah Gracia</h3>
                                 <p className="text-gray-700">
-                                    Sekolah Gracia menyediakan pendidikan dari jenjang TK hingga
-                                    SMK, berfokus pada pembelajaran aktif, pengembangan karakter,
-                                    dan integritas rohani.
+                                    Sekolah Gracia menyediakan pendidikan dari jenjang TK hingga SMK, berfokus pada pembelajaran aktif, pengembangan karakter, dan integritas rohani.
                                 </p>
                             </CardContent>
                         </Card>
@@ -75,16 +92,15 @@ export default function Welcome({
                 </main>
             </div>
 
-            <style>{`
-                .bg-dots-darker {
-                    background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(0,0,0,0.07)'/%3E%3C/svg%3E");
-                }
-                @media (prefers-color-scheme: dark) {
-                    .dark\\:bg-dots-lighter {
-                        background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(255,255,255,0.07)'/%3E%3C/svg%3E");
-                    }
-                }
-            `}</style>
+            {/* Bootstrap Carousel Script */}
+            <link
+                rel="stylesheet"
+                href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            />
+            <script
+                src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+                defer
+            ></script>
         </>
     );
 }
