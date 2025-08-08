@@ -2,27 +2,41 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Pembayaran extends Model
 {
     use HasFactory;
 
-    protected $table = 'teachers';
+    /**
+     * The table associated with the model.
+     */
+    protected $table = 'payments';
 
+    /**
+     * The attributes that are mass assignable.
+     */
     protected $fillable = [
-        'user_id',
-        'nip',
+        'student_id',
+        'amount',
+        'paid_at',
+        'method',
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+    /**
+     * The attributes that should be cast.
+     */
+    protected $casts = [
+        'amount' => 'decimal:2',
+        'paid_at' => 'datetime',
+    ];
 
-    public function mata_pelajarans()
+    /**
+     * Get the student that owns the payment.
+     */
+    public function student()
     {
-        return $this->belongsToMany(MataPelajaran::class, 'subject_teacher', 'teacher_id', 'subject_id');
+        return $this->belongsTo(Siswa::class, 'student_id', 'id');
     }
 }

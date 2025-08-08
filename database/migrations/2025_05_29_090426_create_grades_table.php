@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             // Menambahkan foreign key untuk guru yang menginput nilai
             $table->foreignId('guru_id')
-                ->constrained('gurus')
+                ->constrained('teachers')
                 ->onDelete('cascade');
             $table->foreignId('student_id')
                 ->constrained()

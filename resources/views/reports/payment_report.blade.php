@@ -42,14 +42,14 @@
         <thead>
             <tr>
                 <th>NIP</th>
-                <th>Nama Guru</th>
+                <th>Nama Siswa</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($data as $guru)
+            @foreach ($data as $siswa)
             <tr>
-                <td>{{ $guru->nip }}</td>
-                <td>{{ $guru->user->name }}</td>
+                <td>{{ $siswa->nis }}</td>
+                <td>{{ $siswa->user->name }}</td>
             </tr>
             @endforeach
         </tbody>
