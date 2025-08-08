@@ -23,4 +23,9 @@ class Siswa extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function payments()
+    {
+        return $this->hasMany(Pembayaran::class, 'student_id', 'id');
+    }
 }
