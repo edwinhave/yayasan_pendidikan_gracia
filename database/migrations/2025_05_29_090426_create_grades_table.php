@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('grades', function (Blueprint $table) {
             $table->id();
+            // Menambahkan foreign key untuk guru yang menginput nilai
+            $table->foreignId('guru_id')
+                ->constrained('gurus')
+                ->onDelete('cascade');
             $table->foreignId('student_id')
                 ->constrained()
                 ->onDelete('cascade');

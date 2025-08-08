@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Providers\RouteServiceProvider;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PendaftaranController extends Controller
 {
@@ -99,5 +100,14 @@ class PendaftaranController extends Controller
     public function register()
     {
         return Inertia::render('Pendaftaran/Daftar');
+    }
+
+    public function exportPdf()
+    {
+        $pendaftar = Pendaftaran::select('full_name', 'created_at', 'status_bayar')->get();
+
+        $pdf = Pdf::loadView('pendaftar_pdf', compact('pendaftar'));
+
+        return $pdf->download('laporan_pendaftar.pdf');
     }
 }

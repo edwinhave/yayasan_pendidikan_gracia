@@ -1,6 +1,5 @@
-import { DragHandle, TableCellViewer } from '@/Components/DataTable';
+import { DragHandle } from '@/Components/DataTable';
 import { Badge } from '@/Components/ui/badge';
-import { Button } from '@/Components/ui/button';
 import { Checkbox } from '@/Components/ui/checkbox';
 import { Label } from '@/Components/ui/label';
 import {
@@ -10,18 +9,17 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/Components/ui/select';
-import { schema } from '@/validations/global';
-import { useSortable } from '@dnd-kit/sortable';
 import { ColumnDef } from '@tanstack/react-table';
 import { CheckCircle2Icon, GripVerticalIcon, LoaderIcon } from 'lucide-react';
-import { z } from 'zod';
 
 export const columns: ColumnDef<any>[] = [
+    // Kolom drag untuk urutan
     {
         id: 'drag',
         header: () => null,
         cell: ({ row }) => <DragHandle id={row.original.id} />,
     },
+    // Kolom checkbox untuk select
     {
         id: 'select',
         header: ({ table }) => (
@@ -48,36 +46,37 @@ export const columns: ColumnDef<any>[] = [
         enableSorting: false,
         enableHiding: false,
     },
+    // Kolom Nama Siswa
     {
-        accessorKey: 'header',
+        accessorKey: 'full_name',
         header: 'Nama Siswa',
-        cell: ({ row }) => {
-            return <TableCellViewer item={row.original} />;
-        },
+        cell: ({ row }) => row.original.full_name || '-',
         enableHiding: false,
     },
+    // Kolom Status Bayar
     {
-        accessorKey: 'status',
-        header: 'Status',
+        accessorKey: 'status_bayar',
+        header: 'Status Bayar',
         cell: ({ row }) => (
             <Badge
                 variant="outline"
                 className="flex gap-1 px-1.5 text-muted-foreground [&_svg]:size-3"
             >
-                {row.original.status === 'Done' ? (
+                {row.original.status_bayar?.toLowerCase() === 'lunas' ? (
                     <CheckCircle2Icon className="text-green-500 dark:text-green-400" />
                 ) : (
                     <LoaderIcon />
                 )}
-                {row.original.status}
+                {row.original.status_bayar || 'Belum Bayar'}
             </Badge>
         ),
     },
+    // Kolom Reviewer
     {
         accessorKey: 'reviewer',
         header: 'Reviewer',
         cell: ({ row }) => {
-            const isAssigned = row.original.reviewer !== 'Assign reviewer';
+            const isAssigned = row.original.reviewer && row.original.reviewer !== 'Assign reviewer';
 
             if (isAssigned) {
                 return row.original.reviewer;

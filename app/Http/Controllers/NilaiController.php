@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MataPelajaran;
 use App\Models\Nilai;
 use App\Models\Siswa;
+use Barryvdh\DomPDF\Facade\Pdf; // Tambahkan import library PDF
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -17,55 +18,35 @@ class NilaiController extends Controller
         ]);
     }
 
-    public function create()
+    // ... (metode create, store, edit, update, destroy yang sudah ada)
+
+    /**
+     * Generate PDF report for all grades.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function generateAllGradesReport()
     {
-        return Inertia::render('Nilai/Create', [
-            'students' => Siswa::with('user')->get(),
-            'subjects' => MataPelajaran::get(),
-        ]);
+        $grades = Nilai::with(['siswa.user', 'mata_pelajaran'])->get();
+        $pdf = Pdf::loadView('reports.nilai_report', ['grades' => $grades, 'title' => 'Laporan Nilai Keseluruhan']);
+        return $pdf->download('laporan-nilai-keseluruhan.pdf');
     }
 
-    public function store(Request $request)
+    /**
+     * Generate PDF report for the last 5 semesters.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function generateLastFiveSemestersReport()
     {
-        $data = $request->validate([
-            'student_id' => 'required|string|max:100',
-            'subject_id' => 'required|string|max:100',
-            'score' => 'required|string|max:100',
-            'semester' => 'required|string|max:100',
-        ]);
+        // Ambil 5 semester terakhir dari database
+        // Asumsi kolom `semester` adalah integer dan kita mengurutkan dari yang terbesar
+        $grades = Nilai::with(['siswa.user', 'mata_pelajaran'])
+            ->orderBy('semester', 'desc')
+            ->take(5)
+            ->get();
 
-        Nilai::create($data);
-
-        return redirect()->route('nilai.index')->with('success', 'Nilai created.');
-    }
-
-    public function edit(Nilai $nilai)
-    {
-        return Inertia::render('Nilai/Edit', [
-            'nilai' => $nilai,
-            'students' => Siswa::with('user')->get(),
-            'subjects' => MataPelajaran::get(),
-        ]);
-    }
-
-    public function update(Request $request, Nilai $nilai)
-    {
-        $data = $request->validate([
-            'student_id' => 'required|string|max:100',
-            'subject_id' => 'required|string|max:100',
-            'score' => 'required|string|max:100',
-            'semester' => 'required|string|max:100',
-        ]);
-
-        $nilai->update($data);
-
-        return redirect()->route('nilai.index')->with('success', 'Nilai updated.');
-    }
-
-    public function destroy(Nilai $nilai)
-    {
-        $nilai->delete();
-
-        return redirect()->route('nilai.index')->with('success', 'Nilai deleted.');
+        $pdf = Pdf::loadView('reports.nilai_report', ['grades' => $grades, 'title' => 'Laporan Nilai 5 Semester Terakhir']);
+        return $pdf->download('laporan-nilai-5-semester-terakhir.pdf');
     }
 }

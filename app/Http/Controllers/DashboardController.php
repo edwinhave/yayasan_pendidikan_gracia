@@ -27,7 +27,12 @@ class DashboardController extends Controller
             'siswaRecentGrowth' => $siswaGrowth,
             'guruRecentGrowth' => $guruGrowth,
             'pendaftarRecentGrowth' => $pendaftarGrowth,
-            'pendaftar' => Pendaftaran::get(),
+            'pendaftar' => Pendaftaran::select(
+                'id',
+                'full_name',
+                'status_bayar', // Pastikan field ini ada di tabel
+                'reviewer'      // Kalau tidak ada, tambahkan null atau default
+            )->get(),
         ]);
     }
 

@@ -26,6 +26,14 @@ use Inertia\Inertia;
 |
 */
 
+Route::get('/pendaftar/export-pdf', [PendaftaranController::class, 'exportPdf'])->name('pendaftar.export.pdf');
+Route::get('/gurus/report-pdf', [GuruController::class, 'generateReportPdf'])->name('guru.report.pdf');
+Route::get('/gurus/report-belum-input-pdf', [GuruController::class, 'generateUnfinishedReportPdf'])->name('guru.report.unfinished');
+Route::get('/pendaftaran/report-pdf', [PendaftaranController::class, 'generateReportPdf'])->name('pendaftaran.report.pdf');
+Route::get('/nilai/report/all', [NilaiController::class, 'generateAllGradesReport'])->name('nilai.report.all');
+Route::get('/nilai/report/last-five', [NilaiController::class, 'generateLastFiveSemestersReport'])->name('nilai.report.last_five');
+
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
